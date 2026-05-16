@@ -8,8 +8,11 @@ function App() {
   const [note, setNote] = useState("");
   const [search, setSearch] = useState("");
 
+  // ✅ FIXED BASE URL
+  const BASE_URL = "https://todo-app-backend-mu-six.vercel.app/api/tasks";
+
   const fetchTasks = async () => {
-    const res = await axios.get("https://todo-app-backend-mu-six.vercel.app/");
+    const res = await axios.get(BASE_URL);
     setTasks(res.data.reverse());
   };
 
@@ -20,7 +23,7 @@ function App() {
   const addTask = async () => {
     if (!title.trim()) return;
 
-    await axios.post("https://todo-app-backend-mu-six.vercel.app/", {
+    await axios.post(BASE_URL, {
       title,
       note,
     });
@@ -31,12 +34,12 @@ function App() {
   };
 
   const deleteTask = async (id) => {
-    await axios.delete(`https://todo-app-backend-mu-six.vercel.app/${id}`);
+    await axios.delete(`${BASE_URL}/${id}`);
     fetchTasks();
   };
 
   const toggleTask = async (task) => {
-    await axios.put(`https://todo-app-backend-mu-six.vercel.app/${task._id}`, {
+    await axios.put(`${BASE_URL}/${task._id}`, {
       completed: !task.completed,
     });
 
